@@ -1,4 +1,4 @@
-import { type PoemProps, type Stanza, Poem } from "../domain/poem";
+import { type PoemProps, type Stanza, Poem } from "../../domain/poem";
 
 export const poemBuilder = ({
   id = "poem-id",

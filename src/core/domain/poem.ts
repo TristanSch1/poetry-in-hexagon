@@ -21,4 +21,21 @@ export class Poem {
   get authorId() {
     return this.props.author_id;
   }
+
+  get stanzas() {
+    return this.props.stanzas;
+  }
+
+  get data() {
+    return {
+      id: this.props.id,
+      title: this.props.title,
+      stanzas: this.props.stanzas,
+      author_id: this.props.author_id,
+    };
+  }
+
+  static fromData(data: Poem["data"]) {
+    return new Poem(data);
+  }
 }
