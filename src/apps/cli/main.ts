@@ -10,6 +10,7 @@ import {
   ReadPoemUseCase,
   type ReadPoemCommand,
 } from "../../core/application/use-cases/read-poem.usecase";
+import { ViewAuthorsUseCase } from "../../core/application/use-cases/view-authors.usecase";
 
 const poemRepository = new FileSystemPoemsRepository();
 const authorRepository = new FileSystemAuthorRepository();
@@ -18,6 +19,7 @@ const searchPoemsUseCase = new SearchPoemsUseCase(
   poemRepository,
   authorRepository,
 );
+const viewAuthorsUseCase = new ViewAuthorsUseCase(authorRepository);
 const readPoemUseCase = new ReadPoemUseCase(poemRepository);
 
 const program = new Command();
@@ -66,6 +68,18 @@ program
         console.log("🔎 Search results 🔎");
         console.table(result.value);
       }),
+  )
+  .addCommand(
+    new Command("view-authors").action(async () => {
+      const result = await viewAuthorsUseCase.execute();
+
+      if (result.isErr()) {
+        console.error("❌", result.error);
+        process.exit(1);
+      }
+
+      console.table(result.value);
+    }),
   )
   .addCommand(
     new Command("read")
